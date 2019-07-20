@@ -1,0 +1,38 @@
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+MCP23S08	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+digitalRead	KEYWORD2
+digitalWrite	KEYWORD2
+pinMode	KEYWORD2
+setOutputStates	KEYWORD2
+setPinModes	KEYWORD2
+enablePullups	KEYWORD2
+getInputStates	KEYWORD2
+getOutputStates	KEYWORD2
+getPinModes	KEYWORD2
+getEnabledPullups	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+MCP23S08_IODIR	LITERAL1
+MCP23S08_IPOL	LITERAL1
+MCP23S08_GPINTEN	LITERAL1
+MCP23S08_DEFVAL	LITERAL1
+MCP23S08_INTCON	LITERAL1
+MCP23S08_IOCON	LITERAL1
+MCP23S08_GPPU	LITERAL1
+MCP23S08_INTF	LITERAL1
+MCP23S08_INTCAP	LITERAL1
+MCP23S08_GPIO	LITERAL1
+MCP23S08_OLAT	LITERAL1

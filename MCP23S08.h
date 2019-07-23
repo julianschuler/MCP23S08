@@ -56,7 +56,6 @@ private:
 	// private variables
 	uint8_t csPin;
 	uint8_t deviceOpcode;
-	const SPISettings settings = SPISettings(10000000, MSBFIRST, SPI_MODE0);
 	
 	// low level SPI communication
 	void writeRegister(uint8_t address, uint8_t data);

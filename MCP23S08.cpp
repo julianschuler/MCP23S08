@@ -16,7 +16,7 @@ MCP23S08::MCP23S08(uint8_t csPin, uint8_t deviceAddr) : csPin(csPin) {
 
 void MCP23S08::begin() {
 	SPI.begin();
-	SPI.beginTransaction(settings);
+	SPI.beginTransaction(SPISettings(10000000, MSBFIRST, SPI_MODE0));
 	pinMode(csPin, OUTPUT);
 	digitalWrite(csPin, LOW);
 	// reset all registers to default:
@@ -107,7 +107,7 @@ uint8_t MCP23S08::getEnabledPullups() {
 
 
 void MCP23S08::writeRegister(uint8_t address, uint8_t data) {
-	SPI.beginTransaction(settings);
+	SPI.beginTransaction(SPISettings(10000000, MSBFIRST, SPI_MODE0));
 	digitalWrite(csPin, LOW);
 	SPI.transfer(deviceOpcode);		// initialize transfer with opcode and R/W-flag cleared
 	SPI.transfer(address);
@@ -119,7 +119,7 @@ void MCP23S08::writeRegister(uint8_t address, uint8_t data) {
 
 uint8_t MCP23S08::readRegister(uint8_t address) {
 	uint8_t data;
-	SPI.beginTransaction(settings);
+	SPI.beginTransaction(SPISettings(10000000, MSBFIRST, SPI_MODE0));
 	digitalWrite(csPin, LOW);
 	SPI.transfer(deviceOpcode | 1);		// initialize transfer with opcode and R/W-flag set
 	data = SPI.transfer(address);

@@ -29,23 +29,24 @@ MCP23S08 expander(CS_PIN);
 
 
 void setup() {
-  expander.begin();                         // begin communication with the pin/O expander
+  SPI.begin();                                // start up the SPI bus
+  expander.begin();                           // begin communication with the pin/O expander
   for (uint8_t pin = 0; pin < 4; pin++) {
-    expander.pinMode(pin, INPUT_PULLUP);    // set pins 0 - 3 to input and enable pullups
+    expander.pinModeIO(pin, INPUT_PULLUP);    // set pins 0 - 3 to input and enable pullups
   }
   for (uint8_t pin = 4; pin < 8; pin++) {   
-    expander.pinMode(pin, OUTPUT);          // set pins 4 - 7 to output
+    expander.pinModeIO(pin, OUTPUT);          // set pins 4 - 7 to output
   }
 }
 
 
 void loop() {
   for (uint8_t i = 0; i < 4; i++) {
-    if (expander.digitalRead(i) == LOW) {   // test if button on pin i is pressed
-      expander.digitalWrite(i+4, HIGH);     // turn corresponding LED on pin i+4 on
+    if (expander.digitalReadIO(i) == LOW) {   // test if button on pin i is pressed
+      expander.digitalWriteIO(i+4, HIGH);     // turn corresponding LED on pin i+4 on
     }
     else {
-      expander.digitalWrite(i+4, LOW);      // turn corresponding LED on pin i+4 off
+      expander.digitalWriteIO(i+4, LOW);      // turn corresponding LED on pin i+4 off
     }
   }
 }

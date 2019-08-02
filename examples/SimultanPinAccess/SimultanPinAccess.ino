@@ -28,6 +28,7 @@ MCP23S08 expander(CS_PIN);
 
 
 void setup() {
+  SPI.begin();                          // start up the SPI bus
   expander.begin();                     // begin communication with the I/O expander
   expander.setPinModes(B11111111);      // set all pins to output
   expander.setOutputStates(B01010101);  // turn one half of the LEDs on, one half off

@@ -9,13 +9,18 @@
 #include "MCP23S08.h"
 
 
+
+/*##################################### PUBLIC FUNCTIONS #####################################*/
+
+MCP23S08::MCP23S08(uint8_t csPin) : csPin(csPin) {}
+
+
 MCP23S08::MCP23S08(uint8_t csPin, uint8_t deviceAddr) : csPin(csPin) {
-	deviceOpcode = 0x80 | (deviceAddr << 1);
+	deviceOpcode |= ((deviceAddr & 0x03) << 1);
 }
 
 
 void MCP23S08::begin() {
-	SPI.begin();
 	SPI.beginTransaction(SPISettings(10000000, MSBFIRST, SPI_MODE0));
 	pinMode(csPin, OUTPUT);
 	digitalWrite(csPin, LOW);
@@ -25,12 +30,12 @@ void MCP23S08::begin() {
 	for (uint8_t i = 0; i < MCP23S08_OLAT; i++) {
 		SPI.transfer(0x00);			// reset other 10 registers
 	}
-	digitalWrite(csPin, LOW);
+	digitalWrite(csPin, HIGH);
 	SPI.endTransaction();
 }
 
 
-bool MCP23S08::digitalRead(uint8_t pin) {
+bool MCP23S08::digitalReadIO(uint8_t pin) {
 	if (pin > 7) {
 		return 0;
 	}
@@ -38,16 +43,16 @@ bool MCP23S08::digitalRead(uint8_t pin) {
 }
 
 
-void MCP23S08::digitalWrite(uint8_t pin, bool state) {
+void MCP23S08::digitalWriteIO(uint8_t pin, bool state) {
 	if (pin > 7) {
 		return;
 	}
 	
-	setOutputStates(getOutputStates() & ~(1 << pin) | (state << pin));
+	setOutputStates((getOutputStates() & ~(1 << pin)) | (state << pin));
 }
 
 
-void MCP23S08::pinMode(uint8_t pin, uint8_t mode) {
+void MCP23S08::pinModeIO(uint8_t pin, uint8_t mode) {
 	if (pin > 7) {
 		return;
 	}
@@ -104,7 +109,7 @@ uint8_t MCP23S08::getEnabledPullups() {
 }
 
 
-
+/*##################################### PRIVATE FUNCTIONS #####################################*/
 
 void MCP23S08::writeRegister(uint8_t address, uint8_t data) {
 	SPI.beginTransaction(SPISettings(10000000, MSBFIRST, SPI_MODE0));
@@ -122,7 +127,8 @@ uint8_t MCP23S08::readRegister(uint8_t address) {
 	SPI.beginTransaction(SPISettings(10000000, MSBFIRST, SPI_MODE0));
 	digitalWrite(csPin, LOW);
 	SPI.transfer(deviceOpcode | 1);		// initialize transfer with opcode and R/W-flag set
-	data = SPI.transfer(address);
+	SPI.transfer(address);
+	data = SPI.transfer(0);
 	digitalWrite(csPin, HIGH);
 	SPI.endTransaction();
 	return data;

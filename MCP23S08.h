@@ -30,16 +30,16 @@
 class MCP23S08 {
 public:
 	// constructors
-	MCP23S08(uint8_t csPin) {MCP23S08(csPin, 0);}
+	MCP23S08(uint8_t csPin);
 	MCP23S08(uint8_t csPin, uint8_t deviceAddr);
 	
 	// call in setup
 	void begin();
 	
 	// usage equivalent to the default IDE functions, see examples
-	bool digitalRead(uint8_t pin);
-	void digitalWrite(uint8_t pin, bool state);
-	void pinMode(uint8_t pin, uint8_t mode);
+	bool digitalReadIO(uint8_t pin);
+	void digitalWriteIO(uint8_t pin, bool state);
+	void pinModeIO(uint8_t pin, uint8_t mode);
 	
 	// advanced, write settings for all pins at once
 	void setOutputStates(uint8_t states);
@@ -55,7 +55,7 @@ public:
 private:
 	// private variables
 	uint8_t csPin;
-	uint8_t deviceOpcode;
+	uint8_t deviceOpcode = 0x40;
 	
 	// low level SPI communication
 	void writeRegister(uint8_t address, uint8_t data);

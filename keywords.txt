@@ -9,9 +9,9 @@ MCP23S08	KEYWORD1
 #######################################
 
 begin	KEYWORD2
-digitalRead	KEYWORD2
-digitalWrite	KEYWORD2
-pinMode	KEYWORD2
+digitalReadIO	KEYWORD2
+digitalWriteIO	KEYWORD2
+pinModeIO	KEYWORD2
 setOutputStates	KEYWORD2
 setPinModes	KEYWORD2
 enablePullups	KEYWORD2

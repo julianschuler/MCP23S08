@@ -10,6 +10,7 @@
 #ifndef __MCP23S08_h__
 #define __MCP23S08_h__
 
+#include "Arduino.h"
 #include <SPI.h>
 
 
